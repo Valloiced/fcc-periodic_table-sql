@@ -64,7 +64,20 @@ GET_ELEMENT_ATOMIC_NUMBER() {
 
 # Check element if retrievable using atomic symbol
 GET_ELEMENT_SYMBOL() {
-  echo "get element by symbol"
+  GET_ELEMENT_RESULT=$(
+    $PSQL "
+      SELECT atomic_number, atomic_mass, melting_point_celsius, boiling_point_celsius, symbol, name, type 
+      FROM properties 
+      INNER JOIN elements USING(atomic_number)
+      INNER JOIN types USING(type_id)
+      WHERE symbol='$1'
+    ")
+
+  # Extract data
+  GET_DETAILS "$GET_ELEMENT_RESULT"
+
+  # Output data
+  OUTPUT
 }
 
 # Check element if retrievable using atomic name
