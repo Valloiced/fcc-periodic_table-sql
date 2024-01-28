@@ -7,7 +7,7 @@ CHECK_INPUT() {
   # If no input 
   if [[ -z $1 ]]
   then 
-    echo 'Please provide an element as an argument'
+    echo 'Please provide an element as an argument.'
     return
   fi
 
