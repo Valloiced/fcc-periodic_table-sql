@@ -31,9 +31,35 @@ CHECK_INPUT() {
   GET_ELEMENT_NAME $1
 }
 
+# Extract data from returned data and extract to variables
+GET_DETAILS() {
+  GET_DETAILS=($(echo "$1" | awk '{ print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 }'))
+  
+  ATOMIC_NUMBER="${GET_DETAILS[0]}"
+  ATOMIC_MASS="${GET_DETAILS[2]}"
+  MELTING_POINT="${GET_DETAILS[4]}"
+  BOILING_POINT="${GET_DETAILS[6]}"
+  SYMBOL="${GET_DETAILS[8]}"
+  ELEMENT_NAME="${GET_DETAILS[10]}"
+  TYPE="${GET_DETAILS[12]}"
+}
+
 # Check element if retrievable using atomic number
 GET_ELEMENT_ATOMIC_NUMBER() {
-  echo "get element by number"
+  GET_ELEMENT_RESULT=$(
+    $PSQL "
+      SELECT atomic_number, atomic_mass, melting_point_celsius, boiling_point_celsius, symbol, name, type 
+      FROM properties 
+      INNER JOIN elements USING(atomic_number)
+      INNER JOIN types USING(type_id)
+      WHERE atomic_number=$1
+    ")
+
+  # Extract data
+  GET_DETAILS "$GET_ELEMENT_RESULT"
+
+  # Output data
+  OUTPUT
 }
 
 # Check element if retrievable using atomic symbol
@@ -54,19 +80,6 @@ OUTPUT() {
 # If not found
 NOT_FOUND() {
   echo "not found"
-}
-
-# Extract data from returned data and extract to variables
-GET_DETAILS() {
-  GET_DETAILS=($(echo "$1" | awk '{ print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 }'))
-  
-  ATOMIC_NUMBER="${values[0]}"
-  ATOMIC_MASS="${values[2]}"
-  MELTING_POINT="${values[4]}"
-  BOILING_POINT="${values[6]}"
-  SYMBOL="${values[8]}"
-  ELEMENT_NAME="${values[10]}"
-  TYPE="${values[12]}"
 }
 
 # START
