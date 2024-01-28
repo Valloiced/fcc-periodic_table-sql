@@ -51,5 +51,18 @@ NOT_FOUND() {
   echo "not found"
 }
 
+# Extract data from returned data and extract to variables
+GET_DETAILS() {
+  GET_DETAILS=($(echo "$1" | awk '{ print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 }'))
+  
+  ATOMIC_NUMBER="${values[0]}"
+  ATOMIC_MASS="${values[2]}"
+  MELTING_POINT="${values[4]}"
+  BOILING_POINT="${values[6]}"
+  SYMBOL="${values[8]}"
+  ELEMENT_NAME="${values[10]}"
+  TYPE="${values[12]}"
+}
+
 # START
 CHECK_INPUT $1
