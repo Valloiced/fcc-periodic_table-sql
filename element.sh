@@ -1,5 +1,7 @@
 #! /bin/bash
 
+PSQL="psql -X --username=freecodecamp --dbname=periodic_table -t -c"
+
 # Check input if atomic number, symbol or element name
 CHECK_INPUT() {
   # If no input 
