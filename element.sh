@@ -118,7 +118,7 @@ GET_ELEMENT_NAME() {
 
 # Format the extracted data and output it
 OUTPUT() {
-  echo "The element with atomic number $ATOMIC_NUMBER is $ELEMENT_NAME. It's a $TYPE, with a mass of $ATOMIC_MASS amu. $ELEMENT_NAME has a melting point of $MELTING_POINT celsius and a boiling point of $BOILING_POINT celsius."
+  echo "The element with atomic number $ATOMIC_NUMBER is $ELEMENT_NAME ($SYMBOL). It's a $TYPE, with a mass of $ATOMIC_MASS amu. $ELEMENT_NAME has a melting point of $MELTING_POINT celsius and a boiling point of $BOILING_POINT celsius."
 }
 
 # If not found
