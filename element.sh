@@ -1,10 +1,32 @@
 #! /bin/bash
 
-echo 'Please provide an element as an argument'
-
 # Check input if atomic number, symbol or element name
 CHECK_INPUT() {
-  echo "check input"
+  # If no input 
+  if [[ -z $1 ]]
+  then 
+    echo 'Please provide an element as an argument'
+    return
+  fi
+
+  # If input is a number
+  if [[ $1 =~ ^[0-9]+$ ]]
+  then
+    GET_ELEMENT_ATOMIC_NUMBER $1
+    return
+  fi
+
+  # If input is a symbol
+  STR_LENGTH=$(echo -n $1 | wc -m)
+
+  if [[ $STR_LENGTH -le 2 && $STR_LENGTH -gt 0 ]]
+  then
+    GET_ELEMENT_SYMBOL $1
+    return
+  fi
+
+  # If input is an element name (given)
+  GET_ELEMENT_NAME $1
 }
 
 # Check element if retrievable using atomic number
@@ -28,4 +50,4 @@ NOT_FOUND() {
 }
 
 # START
-CHECK_INPUT
+CHECK_INPUT $1
