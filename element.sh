@@ -55,6 +55,12 @@ GET_ELEMENT_ATOMIC_NUMBER() {
       WHERE atomic_number=$1
     ")
 
+  if [[ -z $GET_ELEMENT_RESULT ]]
+  then 
+    NOT_FOUND
+    return
+  fi
+
   # Extract data
   GET_DETAILS "$GET_ELEMENT_RESULT"
 
@@ -72,6 +78,12 @@ GET_ELEMENT_SYMBOL() {
       INNER JOIN types USING(type_id)
       WHERE symbol='$1'
     ")
+
+  if [[ -z $GET_ELEMENT_RESULT ]]
+  then 
+    NOT_FOUND
+    return
+  fi
 
   # Extract data
   GET_DETAILS "$GET_ELEMENT_RESULT"
@@ -91,6 +103,12 @@ GET_ELEMENT_NAME() {
       WHERE name='$1'
     ")
 
+  if [[ -z $GET_ELEMENT_RESULT ]]
+  then 
+    NOT_FOUND
+    return
+  fi
+
   # Extract data
   GET_DETAILS "$GET_ELEMENT_RESULT"
 
@@ -105,7 +123,7 @@ OUTPUT() {
 
 # If not found
 NOT_FOUND() {
-  echo "not found"
+  echo "I could not find that element in the database."
 }
 
 # START
